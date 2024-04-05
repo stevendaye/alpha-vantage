@@ -1,0 +1,31 @@
+/* General Rules */
+:root {
+  --defaultColor: whitesmoke;
+  --mainColor: #1487ff;
+  --secondaryColor: #242424;
+  --greyColor: #555;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--defaultColor);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--secondaryColor);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--greyColor);
+}
