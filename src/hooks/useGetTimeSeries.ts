@@ -3,19 +3,25 @@ import apiClient from '../utils/apiClient';
 import useShowToast from './useShowToast';
 import { TimeSeriesProps } from '../props';
 
-const useGetStocks = (endpoint: string, config: object, dep: Array<string>) => {
-  const [stocks, setStocks] = useState<TimeSeriesProps | null>(null);
+/* Hooks to get any kind of time series Stock */
+const useGetTimeSeries = (
+  endpoint: string,
+  config: object,
+  dep: Array<string>,
+) => {
+  const [timeSeriesStocks, setTimeSeriesStocks] =
+    useState<TimeSeriesProps | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const showToast = useShowToast();
 
   const getStocks = async () => {
     setIsLoading(true);
-    setStocks(null);
+    setTimeSeriesStocks(null);
 
     try {
       const res = await apiClient.get(endpoint, config);
-      setStocks(res.data);
+      setTimeSeriesStocks(res.data);
     } catch (err) {
       showToast('Error', (err as Error).message, 'error');
       setError(true);
@@ -28,7 +34,7 @@ const useGetStocks = (endpoint: string, config: object, dep: Array<string>) => {
     getStocks();
   }, dep || []);
 
-  return { error, isLoading, stocks };
+  return { error, isLoading, timeSeriesStocks };
 };
 
-export default useGetStocks;
+export default useGetTimeSeries;

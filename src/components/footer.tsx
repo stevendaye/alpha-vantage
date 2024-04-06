@@ -1,7 +1,9 @@
 import { Flex, Text, IconButton } from '@chakra-ui/react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { FooterProps } from '../props';
+import { ITEMS_PER_PAGE } from '../constants';
 
+/* Component displaying Footer & Pagination Feature */
 export const Footer = ({
   timeSeriesMetadata,
   handleNextPage,
@@ -30,8 +32,9 @@ export const Footer = ({
 
       <Flex gap={7} alignItems={'center'}>
         <Flex fontSize={'0.8em'} gap={1}>
+          {/* Number of items per page to be displayed */}
           <Text>Rows per Page:</Text>
-          <Text>25</Text>
+          <Text>{ITEMS_PER_PAGE}</Text>
         </Flex>
 
         <Text fontSize={'0.8em'}>
@@ -41,18 +44,20 @@ export const Footer = ({
         <Flex alignItems={'center'}>
           <IconButton
             variant={'outline'}
-            aria-label="Backword Sign"
+            aria-label="Previous Button"
             color={'blackAlpha.700'}
             fontSize={'1.5em'}
             icon={<ChevronLeftIcon />}
             onClick={handlePrevPage}
+            title="Previous"
           />
           <IconButton
             color={'blackAlpha.700'}
-            aria-label="Forward Sign"
+            aria-label="Next Button"
             fontSize={'1.5em'}
             icon={<ChevronRightIcon />}
             onClick={handleNextPage}
+            title="Next"
           />
         </Flex>
       </Flex>

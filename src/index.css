@@ -2,8 +2,8 @@
 :root {
   --defaultColor: whitesmoke;
   --mainColor: #1487ff;
-  --secondaryColor: #242424;
-  --greyColor: #555;
+  --secondaryColor: #b7b7b7;
+  --greyColor: #a7a7a7;
 }
 
 body {
@@ -24,6 +24,7 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background: var(--secondaryColor);
+  border-radius: 150px;
 }
 
 ::-webkit-scrollbar-thumb:hover {

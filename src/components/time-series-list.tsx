@@ -8,24 +8,25 @@ import {
   DATE_OPEN,
   DATE_VOLUME,
 } from '../constants';
-import { ItemRow } from '.';
-import { TimeSeriesDateProps, TimeSeriesListProps } from '../props';
+import { TimeRow } from '.';
+import { TimeSeriesCommonProps, TimeSeriesListProps } from '../props';
 
+/* Component Listing Time Series Results */
 const TimeSeriesList = ({
   visibleItems,
   timeSeriesType,
   stocks,
   error,
-  handleTimeSeries,
+  handleSetTimeSeries,
 }: TimeSeriesListProps) => {
-  const [series, setSeries] = useState<TimeSeriesDateProps[]>([]);
+  const [series, setSeries] = useState<TimeSeriesCommonProps[]>([]);
 
   useEffect(() => {
     setSeries([]);
 
     if (stocks && timeSeriesType && stocks[timeSeriesType]) {
       const timeSeries = stocks[timeSeriesType];
-      const timeSeriesByDate: TimeSeriesDateProps[] = Object.keys(
+      const timeSeriesByDate: TimeSeriesCommonProps[] = Object.keys(
         timeSeries,
       ).map((date) => ({
         date,
@@ -36,11 +37,12 @@ const TimeSeriesList = ({
         volume: timeSeries[date][DATE_VOLUME],
       }));
 
-      /* Start listing from past stoks
-       * We could have sorted as well on Date
-       */
-      setSeries(timeSeriesByDate.reverse());
-      handleTimeSeries(timeSeriesByDate.reverse());
+      /* Sorting list by date*/
+      const sortedTimeSeries = timeSeriesByDate.sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+      );
+      setSeries(sortedTimeSeries);
+      handleSetTimeSeries(timeSeriesByDate);
     }
   }, [stocks]);
 
@@ -84,7 +86,7 @@ const TimeSeriesList = ({
           width={'100%'}
         >
           {({ index, style }) => (
-            <ItemRow
+            <TimeRow
               date={visibleItems[index].date}
               open={visibleItems[index].open}
               high={visibleItems[index].high}

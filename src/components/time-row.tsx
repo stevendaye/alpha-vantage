@@ -1,7 +1,8 @@
 import { Flex, Box, Text } from '@chakra-ui/react';
-import { ItemRowProps } from '../props';
+import { TimeRowProps } from '../props';
 
-export const ItemRow = ({
+/* Row for each Time Serie Result */
+export const TimeRow = ({
   date,
   open,
   high,
@@ -9,9 +10,15 @@ export const ItemRow = ({
   close,
   volume,
   style,
-}: ItemRowProps) => (
+}: TimeRowProps) => (
   <Box style={style}>
-    <Flex key={date} width={'full'} justifyContent={'space-between'}>
+    <Flex
+      key={date}
+      width={'full'}
+      justifyContent={'space-between'}
+      borderBottom={'1px solid #d2d2d2'}
+      pb={3}
+    >
       <Text>{date}</Text>
       <Text>{open}</Text>
       <Text>{high}</Text>

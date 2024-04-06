@@ -1,64 +1,86 @@
-import { Box, Flex, Text, Skeleton } from '@chakra-ui/react';
+import { Box, Flex, Text, Spinner } from '@chakra-ui/react';
 import {
-  META_DATA_LAST_REFRESHED,
-  META_DATA_OUTPUT_SIZE,
+  META_DATA_LAST_REFRESHED_DIGITAL,
+  META_DATA_LAST_REFRESHED_TIME,
   META_DATA_SYMBOL,
-  META_DATA_TIMZONE,
+  META_DATA_CURRENCY_NAME,
+  META_DATA_MARKET_NAME,
 } from '../constants';
 import { MetadataProps } from '../props';
 
-export const TimeSeriesMetaData = ({ metaData }: MetadataProps) => {
+/* Component displaying basic Metadata info on the Stock Type */
+export const TimeSeriesMetaData = ({ metaData, error }: MetadataProps) => {
   return (
     <Box
-      flex={1}
+      flex={2}
       display={'flex'}
-      color={'blackAlpha.800'}
+      color={'blackAlpha.700'}
       alignItems={'flex-end'}
-      justifyContent={'flex-start'}
+      justifyContent={'flex-end'}
       gap={5}
       mr={5}
       pb={4}
     >
       <Flex gap={0.5} fontSize={'0.8em'} alignItems={'center'}>
         <Text fontWeight={'bold'}>Synbol:</Text>
+
         <Box>
-          {!metaData ? (
-            <Skeleton height="10px" width="60px" />
+          {!error && !metaData ? (
+            <Spinner size={'sm'} color="blackAlpha.700" thickness="1px" />
           ) : (
-            <Text>{metaData[META_DATA_SYMBOL]}</Text>
+            <Text>
+              {metaData?.[META_DATA_SYMBOL] ? metaData[META_DATA_SYMBOL] : '--'}
+            </Text>
           )}
         </Box>
       </Flex>
 
       <Flex gap={1} fontSize={'0.8em'} alignItems={'center'}>
         <Text fontWeight={'bold'}>Last Refreshed:</Text>
+
         <Box>
-          {!metaData ? (
-            <Skeleton height="10px" width="60px" />
+          {!error && !metaData ? (
+            <Spinner size={'sm'} color="blackAlpha.700" thickness="1px" />
           ) : (
-            <Text>{metaData[META_DATA_LAST_REFRESHED]}</Text>
+            <Text>
+              {metaData?.[META_DATA_LAST_REFRESHED_DIGITAL] ||
+              metaData?.[META_DATA_LAST_REFRESHED_TIME]
+                ? metaData[META_DATA_LAST_REFRESHED_DIGITAL] ||
+                  metaData[META_DATA_LAST_REFRESHED_TIME]
+                : '--'}
+            </Text>
           )}
         </Box>
       </Flex>
 
       <Flex gap={0.5} fontSize={'0.8em'} alignItems={'center'}>
-        <Text fontWeight={'bold'}>Output Size:</Text>
+        <Text fontWeight={'bold'}>Market Name:</Text>
+
         <Box>
-          {!metaData ? (
-            <Skeleton height="10px" width="60px" />
+          {!error && !metaData ? (
+            <Spinner size={'sm'} color="blackAlpha.700" thickness="1px" />
           ) : (
-            <Text>{metaData[META_DATA_OUTPUT_SIZE]}</Text>
+            <Text>
+              {metaData?.[META_DATA_MARKET_NAME]
+                ? metaData[META_DATA_MARKET_NAME]
+                : '--'}
+            </Text>
           )}
         </Box>
       </Flex>
 
       <Flex gap={0.5} fontSize={'0.8em'} alignItems={'center'}>
-        <Text fontWeight={'bold'}>Time Zone:</Text>
+        <Text fontWeight={'bold'}>Currency Name:</Text>
+
         <Box>
-          {!metaData ? (
-            <Skeleton height="10px" width="60px" />
+          {!error && !metaData ? (
+            <Spinner size={'sm'} color="blackAlpha.700" thickness="1px" />
           ) : (
-            <Text>{metaData[META_DATA_TIMZONE]}</Text>
+            <Text>
+              {metaData?.[META_DATA_CURRENCY_NAME]
+                ? metaData[META_DATA_CURRENCY_NAME]
+                : '--'}
+            </Text>
           )}
         </Box>
       </Flex>

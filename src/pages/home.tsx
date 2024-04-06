@@ -1,15 +1,19 @@
 import { useState } from 'react';
 import { Box, Stack, VStack, Flex } from '@chakra-ui/react';
-import useGetStocks from '../hooks/useGetStocks';
+import useGetTimeSeries from '../hooks/useGetTimeSeries';
 import {
   EQUITY,
   API_KEY,
   TIME_SERIES_TYPE,
-  META_DATA_TIME_SERIES_DAILY,
   META_DATA,
-  META_DATA_TIME_SERIES_MONTHLY,
-  META_DATA_TIME_SERIES_WEEKLY,
   QUERY,
+  STOCK_TYPE,
+  EXHANGE_MARKET,
+  DIGITAL_CURRENCIES,
+  DIGITAL_CURRENCY_TYPE,
+  META_DATA_TIME_SERIES,
+  META_DATA_DIGITAL_CURRENCY,
+  ITEMS_PER_PAGE,
 } from '../constants';
 import {
   HeaderList,
@@ -17,42 +21,66 @@ import {
   TimeSeriesMetaData,
   TimeSeriesList,
   Footer,
+  MainHeader,
+  DigitalSeriesLIst,
 } from '../components';
-import { TimeSeriesDateProps } from '../props';
+import { TimeSeriesCommonProps } from '../props';
 
 const Home = () => {
+  /* Set by default the type of core Stock API the user want to request
+   * Eg: Time Series (Only takes two values and is controlled by the top right button)
+   */
+  const [stockType, setStockType] = useState<string>(STOCK_TYPE.TIME_SERIES);
+
+  /* Dynamically set default stock type
+   * Eg: TIME_SERIES_DAILY || DIGITAL_CURRENCY_DAILY (based on state change)
+   */
   const [timeSeriesType, setTimeSeriesType] = useState<string>(
     TIME_SERIES_TYPE.DAILY,
   );
+
+  /* Set default string metadata to be matched with API reponse
+   * Eg: Time Series (Daily)
+   */
   const [timeSeriesMetadeta, setTimeSeriesMetadeta] = useState<string>(
-    META_DATA_TIME_SERIES_DAILY,
+    META_DATA_TIME_SERIES.DAILY,
   );
 
-  /* Send Stocks API Request */
-  const { error, stocks } = useGetStocks(
+  /* Send Stock Series API Request */
+  const params: { [key: string]: string } = {
+    function: timeSeriesType,
+    symbol:
+      stockType === STOCK_TYPE.TIME_SERIES
+        ? EQUITY.IBM
+        : DIGITAL_CURRENCIES.BTC,
+  };
+
+  if (stockType === STOCK_TYPE.DIGITAL_CURRENCIES) {
+    params['market'] = EXHANGE_MARKET.CNY;
+  }
+  params['apikey'] = API_KEY;
+
+  const { error, timeSeriesStocks } = useGetTimeSeries(
     QUERY,
     {
-      params: {
-        function: timeSeriesType,
-        symbol: EQUITY.IBM,
-        apikey: API_KEY,
-      },
+      params,
     },
-    [timeSeriesType],
+    [timeSeriesType, stockType],
   );
 
-  /* Handle Paginations & Set Items per page visible in the viewport */
-  const [timeSeries, setTimeSeries] = useState<TimeSeriesDateProps[]>([]);
-  const [page, setPage] = useState<number>(1);
+  /* Handle Paginations & Set visible items in the viewport */
+  /* Number of items to be displayed and used for calculation*/
   const defaultPage = 1;
-  const itemsPerPage = 25;
+  const itemsPerPage = ITEMS_PER_PAGE;
+  const [page, setPage] = useState<number>(1);
+  const [timeSeries, setTimeSeries] = useState<TimeSeriesCommonProps[]>([]);
 
-  // start and end index for current page
+  /* Calculate 'start' and 'end' index for the current page */
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = Math.min(startIndex + itemsPerPage, timeSeries.length);
   const visibleItems = timeSeries.slice(startIndex, endIndex);
 
-  const handleTimeSeries = (series: TimeSeriesDateProps[]) => {
+  const handleSetTimeSeries = (series: TimeSeriesCommonProps[]) => {
     setTimeSeries(series);
   };
   const handleNextPage = () => {
@@ -71,75 +99,124 @@ const Home = () => {
    */
   const handleTabChange = (type: string) => {
     setTimeSeriesType(type);
+    // Reset page count
     setPage(1);
 
     switch (type) {
-      case TIME_SERIES_TYPE.DAILY:
-        setTimeSeriesMetadeta(META_DATA_TIME_SERIES_DAILY);
+      case stockType === STOCK_TYPE.TIME_SERIES
+        ? TIME_SERIES_TYPE.WEEKLY
+        : DIGITAL_CURRENCY_TYPE.WEEKLY:
+        setTimeSeriesMetadeta(
+          stockType === STOCK_TYPE.TIME_SERIES
+            ? META_DATA_TIME_SERIES.WEEKLY
+            : META_DATA_DIGITAL_CURRENCY.WEEKLY,
+        );
         break;
-      case TIME_SERIES_TYPE.WEEKLY:
-        setTimeSeriesMetadeta(META_DATA_TIME_SERIES_WEEKLY);
-        break;
-      case TIME_SERIES_TYPE.MONTHLY:
-        setTimeSeriesMetadeta(META_DATA_TIME_SERIES_MONTHLY);
+      case stockType === STOCK_TYPE.TIME_SERIES
+        ? TIME_SERIES_TYPE.MONTHLY
+        : DIGITAL_CURRENCY_TYPE.MONTHLY:
+        setTimeSeriesMetadeta(
+          stockType === STOCK_TYPE.TIME_SERIES
+            ? META_DATA_TIME_SERIES.MONTHLY
+            : META_DATA_DIGITAL_CURRENCY.MONTHLY,
+        );
         break;
       default:
-        break;
+        setTimeSeriesMetadeta(
+          stockType === STOCK_TYPE.TIME_SERIES
+            ? META_DATA_TIME_SERIES.DAILY
+            : META_DATA_DIGITAL_CURRENCY.DAILY,
+        );
     }
   };
 
+  /* On change of stockTye button (Time Series or Digital Currencies),
+   * - Update the button
+   * - Update data to be displayed according to the stock
+   * - Update the data according to the current active tab
+   */
+  const handleStockTypechange = (
+    nStockType: string,
+    nTimeSerieType: string,
+    ntimeSeriesMetadata: string,
+  ) => {
+    // Reset page count
+    setPage(1);
+
+    setStockType(nStockType);
+    setTimeSeriesType(nTimeSerieType);
+    setTimeSeriesMetadeta(ntimeSeriesMetadata);
+  };
+
   return (
-    <Stack
-      direction={'column'}
-      bg={'whitesmoke'}
-      borderRadius={7}
-      pb={1}
-      position={'relative'}
-    >
-      {/* Tabs Listing 3 Core Stock Types & Basic Metadata Info */}
-      <Flex justifyContent={'space-between'}>
-        <TabsList handleTabClick={handleTabChange} />
-        <TimeSeriesMetaData metaData={stocks?.[META_DATA]} />
-      </Flex>
-
-      {/* Header List*/}
-      <HeaderList />
-
-      {/* Stock List */}
-      <Box
-        width={'full'}
-        height={'calc(100vh - 325px)'}
-        bg={'whitesmoke'}
-        color={'blackAlpha.800'}
-        mt={0}
-      >
-        <VStack
-          height={'inherit'}
-          overflow={'hidden'}
-          alignItems={'flex-start'}
-          pl={7}
-          pr={7}
-        >
-          <TimeSeriesList
-            visibleItems={visibleItems}
-            stocks={stocks}
-            timeSeriesType={timeSeriesMetadeta}
-            error={error}
-            handleTimeSeries={handleTimeSeries}
-          />
-        </VStack>
-      </Box>
-
-      {/* Footer & Pagination */}
-      <Footer
-        timeSeriesMetadata={timeSeriesMetadeta}
-        handleNextPage={handleNextPage}
-        handlePrevPage={handlePrevPage}
-        endIndex={endIndex}
-        startIndex={startIndex}
-        timeSeries={timeSeries}
+    <>
+      <MainHeader
+        activeTab={timeSeriesType}
+        handleStockTypechange={handleStockTypechange}
+        stockType={stockType}
       />
-    </Stack>
+
+      <Stack
+        direction={'column'}
+        bg={'whitesmoke'}
+        borderRadius={7}
+        pb={1}
+        position={'relative'}
+      >
+        <Flex justifyContent={'space-between'}>
+          <TabsList handleTabClick={handleTabChange} stockType={stockType} />
+          <TimeSeriesMetaData
+            metaData={timeSeriesStocks?.[META_DATA]}
+            error={error}
+          />
+        </Flex>
+
+        <HeaderList stockType={stockType} />
+
+        <Box
+          width={'full'}
+          height={'calc(100vh - 325px)'}
+          bg={'whitesmoke'}
+          color={'blackAlpha.800'}
+          mt={0}
+        >
+          <VStack
+            height={'inherit'}
+            overflow={'hidden'}
+            alignItems={'flex-start'}
+            pl={7}
+            pr={7}
+          >
+            {stockType === STOCK_TYPE.TIME_SERIES ? (
+              <TimeSeriesList
+                visibleItems={visibleItems}
+                stocks={timeSeriesStocks}
+                timeSeriesType={timeSeriesMetadeta}
+                error={error}
+                handleSetTimeSeries={handleSetTimeSeries}
+              />
+            ) : (
+              <DigitalSeriesLIst
+                visibleItems={visibleItems}
+                stocks={timeSeriesStocks}
+                digitalSeriesType={timeSeriesMetadeta}
+                error={error}
+                handleSetDigitalSeries={handleSetTimeSeries}
+              />
+            )}
+          </VStack>
+        </Box>
+
+        <Footer
+          timeSeriesMetadata={timeSeriesMetadeta}
+          handleNextPage={handleNextPage}
+          handlePrevPage={handlePrevPage}
+          endIndex={endIndex}
+          startIndex={startIndex}
+          timeSeries={timeSeries}
+        />
+      </Stack>
+    </>
   );
 };
 
