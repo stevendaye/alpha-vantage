@@ -1,21 +1,21 @@
 import { Flex, Box, Text } from '@chakra-ui/react';
-import { DigitalRowProps } from '../props';
+import { ItemsCommonProps } from '../props';
 
 /* Row for each Digital Currency result */
 export const DigitalRow = ({
   date,
-  open_a,
+  open,
   open_b,
-  high_a,
+  high,
   high_b,
-  low_a,
+  low,
   low_b,
-  close_a,
+  close,
   close_b,
   volume,
   cap,
   style,
-}: DigitalRowProps) => (
+}: ItemsCommonProps) => (
   <Box style={style}>
     <Flex
       key={date}
@@ -28,17 +28,17 @@ export const DigitalRow = ({
        * to allow a nice display of the data on the UI
        * to keep decimal numbers to minimum
        */}
-      <Text>{parseFloat(date).toFixed(2)}</Text>
-      <Text>{parseFloat(open_a).toFixed(2)}</Text>
-      <Text>{parseFloat(open_b).toFixed(2)}</Text>
-      <Text>{parseFloat(high_a).toFixed(2)}</Text>
-      <Text>{parseFloat(high_b).toFixed(2)}</Text>
-      <Text>{parseFloat(low_a).toFixed(2)}</Text>
-      <Text>{parseFloat(low_b).toFixed(2)}</Text>
-      <Text>{parseFloat(close_a).toFixed(2)}</Text>
-      <Text>{parseFloat(close_b).toFixed(2)}</Text>
+      <Text>{date}</Text>
+      <Text>{parseFloat(open).toFixed(2)}</Text>
+      <Text>{parseFloat(open_b || '').toFixed(2)}</Text>
+      <Text>{parseFloat(high || '').toFixed(2)}</Text>
+      <Text>{parseFloat(high_b || '').toFixed(2)}</Text>
+      <Text>{parseFloat(low || '').toFixed(2)}</Text>
+      <Text>{parseFloat(low_b || '').toFixed(2)}</Text>
+      <Text>{parseFloat(close || '').toFixed(2)}</Text>
+      <Text>{parseFloat(close_b || '').toFixed(2)}</Text>
       <Text>{parseFloat(volume).toFixed(2)}</Text>
-      <Text>{parseFloat(cap).toFixed(2)}</Text>
+      <Text>{parseFloat(cap || '').toFixed(2)}</Text>
     </Flex>
   </Box>
 );

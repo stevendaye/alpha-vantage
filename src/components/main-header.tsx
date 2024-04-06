@@ -1,7 +1,7 @@
 import {
   Box,
   Flex,
-  Heading,
+  Text,
   Menu,
   MenuButton,
   MenuList,
@@ -85,16 +85,18 @@ export const MainHeader = ({
         alignItems={'baseline'}
         p={0}
       >
-        <Heading
-          as={'h3'}
+        <Text
+          fontSize={'1.5em'}
+          fontWeight={'bold'}
           textAlign={'center'}
           color={'#1487FF'}
           px={4}
           py={2}
-          borderLeft={'5px solid whitesmoke'}
+          borderLeft={'7px solid #000'}
+          borderRadius={'5px'}
         >
           Alpha Vantage
-        </Heading>
+        </Text>
 
         <Menu>
           {({ isOpen }) => (
@@ -103,11 +105,14 @@ export const MainHeader = ({
                 isActive={isOpen}
                 as={Button}
                 rightIcon={<ChevronDownIcon />}
+                bg={'blackAlpha.900'}
+                _hover={{ bg: '#fff', color: '#000' }}
+                _active={{ bg: 'whiteAlpha.900', color: '#000' }}
               >
                 {stockType}
               </MenuButton>
 
-              <MenuList>
+              <MenuList bg={'blackAlpha.900'} color={'#fff'}>
                 <MenuItem
                   onClick={() => {
                     const { timeSeriesType, metaData } =
@@ -118,6 +123,8 @@ export const MainHeader = ({
                       metaData,
                     );
                   }}
+                  bg={'blackAlpha.900'}
+                  _hover={{ bg: '#fff', color: '#000' }}
                 >
                   {STOCK_TYPE.TIME_SERIES}
                 </MenuItem>
@@ -131,6 +138,8 @@ export const MainHeader = ({
                       metaData,
                     );
                   }}
+                  bg={'blackAlpha.900'}
+                  _hover={{ bg: '#fff', color: '#000' }}
                 >
                   {STOCK_TYPE.DIGITAL_CURRENCIES}
                 </MenuItem>

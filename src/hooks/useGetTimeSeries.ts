@@ -5,6 +5,7 @@ import { TimeSeriesProps } from '../props';
 
 /* Hooks to get any kind of time series Stock */
 const useGetTimeSeries = (
+  key: string,
   endpoint: string,
   config: object,
   dep: Array<string>,
@@ -15,23 +16,30 @@ const useGetTimeSeries = (
   const [error, setError] = useState<boolean>(false);
   const showToast = useShowToast();
 
-  const getStocks = async () => {
-    setIsLoading(true);
-    setTimeSeriesStocks(null);
+  const getStocks = async (key: string) => {
+    /* Performance wise, block unnecessary api calls
+     * Store/Cache each stock result in a key-value object
+     */
+    if (!timeSeriesStocks || !timeSeriesStocks[key]) {
+      setIsLoading(true);
 
-    try {
-      const res = await apiClient.get(endpoint, config);
-      setTimeSeriesStocks(res.data);
-    } catch (err) {
-      showToast('Error', (err as Error).message, 'error');
-      setError(true);
-    } finally {
-      setIsLoading(false);
+      try {
+        const res = await apiClient.get(endpoint, config);
+        setTimeSeriesStocks((prevStock) => ({
+          ...(prevStock || {}),
+          [key]: res.data,
+        }));
+      } catch (err) {
+        showToast('Error', (err as Error).message, 'error');
+        setError(true);
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
   useEffect(() => {
-    getStocks();
+    getStocks(key);
   }, dep || []);
 
   return { error, isLoading, timeSeriesStocks };

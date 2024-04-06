@@ -4,6 +4,7 @@
   --mainColor: #1487ff;
   --secondaryColor: #b7b7b7;
   --greyColor: #a7a7a7;
+  --blackColor: #000;
 }
 
 body {
@@ -23,10 +24,10 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--secondaryColor);
+  background: var(--blackColor);
   border-radius: 150px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--greyColor);
+  background: var(--mainColor);
 }

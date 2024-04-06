@@ -9,7 +9,7 @@ import {
 import { MetadataProps } from '../props';
 
 /* Component displaying basic Metadata info on the Stock Type */
-export const TimeSeriesMetaData = ({ metaData, error }: MetadataProps) => {
+export const TimeSeriesMetaData = ({ metaData, isLoading }: MetadataProps) => {
   return (
     <Box
       flex={2}
@@ -22,10 +22,12 @@ export const TimeSeriesMetaData = ({ metaData, error }: MetadataProps) => {
       pb={4}
     >
       <Flex gap={0.5} fontSize={'0.8em'} alignItems={'center'}>
-        <Text fontWeight={'bold'}>Synbol:</Text>
+        <Text fontWeight={'bold'} color={'#1487FF'}>
+          Synbol:
+        </Text>
 
         <Box>
-          {!error && !metaData ? (
+          {isLoading && !metaData ? (
             <Spinner size={'sm'} color="blackAlpha.700" thickness="1px" />
           ) : (
             <Text>
@@ -36,10 +38,12 @@ export const TimeSeriesMetaData = ({ metaData, error }: MetadataProps) => {
       </Flex>
 
       <Flex gap={1} fontSize={'0.8em'} alignItems={'center'}>
-        <Text fontWeight={'bold'}>Last Refreshed:</Text>
+        <Text fontWeight={'bold'} color={'#1487FF'}>
+          Last Refreshed:
+        </Text>
 
         <Box>
-          {!error && !metaData ? (
+          {isLoading && !metaData ? (
             <Spinner size={'sm'} color="blackAlpha.700" thickness="1px" />
           ) : (
             <Text>
@@ -54,10 +58,12 @@ export const TimeSeriesMetaData = ({ metaData, error }: MetadataProps) => {
       </Flex>
 
       <Flex gap={0.5} fontSize={'0.8em'} alignItems={'center'}>
-        <Text fontWeight={'bold'}>Market Name:</Text>
+        <Text fontWeight={'bold'} color={'#1487FF'}>
+          Market Name:
+        </Text>
 
         <Box>
-          {!error && !metaData ? (
+          {isLoading && !metaData ? (
             <Spinner size={'sm'} color="blackAlpha.700" thickness="1px" />
           ) : (
             <Text>
@@ -70,10 +76,12 @@ export const TimeSeriesMetaData = ({ metaData, error }: MetadataProps) => {
       </Flex>
 
       <Flex gap={0.5} fontSize={'0.8em'} alignItems={'center'}>
-        <Text fontWeight={'bold'}>Currency Name:</Text>
+        <Text fontWeight={'bold'} color={'#1487FF'}>
+          Currency Name:
+        </Text>
 
         <Box>
-          {!error && !metaData ? (
+          {isLoading && !metaData ? (
             <Spinner size={'sm'} color="blackAlpha.700" thickness="1px" />
           ) : (
             <Text>

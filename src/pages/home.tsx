@@ -22,9 +22,8 @@ import {
   TimeSeriesList,
   Footer,
   MainHeader,
-  DigitalSeriesLIst,
 } from '../components';
-import { TimeSeriesCommonProps } from '../props';
+import { ItemsCommonProps } from '../props';
 
 const Home = () => {
   /* Set by default the type of core Stock API the user want to request
@@ -60,7 +59,8 @@ const Home = () => {
   }
   params['apikey'] = API_KEY;
 
-  const { error, timeSeriesStocks } = useGetTimeSeries(
+  const { error, isLoading, timeSeriesStocks } = useGetTimeSeries(
+    timeSeriesType,
     QUERY,
     {
       params,
@@ -73,14 +73,14 @@ const Home = () => {
   const defaultPage = 1;
   const itemsPerPage = ITEMS_PER_PAGE;
   const [page, setPage] = useState<number>(1);
-  const [timeSeries, setTimeSeries] = useState<TimeSeriesCommonProps[]>([]);
+  const [timeSeries, setTimeSeries] = useState<ItemsCommonProps[]>([]);
 
   /* Calculate 'start' and 'end' index for the current page */
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = Math.min(startIndex + itemsPerPage, timeSeries.length);
   const visibleItems = timeSeries.slice(startIndex, endIndex);
 
-  const handleSetTimeSeries = (series: TimeSeriesCommonProps[]) => {
+  const handleSetTimeSeries = (series: ItemsCommonProps[]) => {
     setTimeSeries(series);
   };
   const handleNextPage = () => {
@@ -158,7 +158,7 @@ const Home = () => {
 
       <Stack
         direction={'column'}
-        bg={'whitesmoke'}
+        bg={'#fff'}
         borderRadius={7}
         pb={1}
         position={'relative'}
@@ -166,8 +166,8 @@ const Home = () => {
         <Flex justifyContent={'space-between'}>
           <TabsList handleTabClick={handleTabChange} stockType={stockType} />
           <TimeSeriesMetaData
-            metaData={timeSeriesStocks?.[META_DATA]}
-            error={error}
+            metaData={timeSeriesStocks?.[timeSeriesType]?.[META_DATA]}
+            isLoading={isLoading}
           />
         </Flex>
 
@@ -176,7 +176,7 @@ const Home = () => {
         <Box
           width={'full'}
           height={'calc(100vh - 325px)'}
-          bg={'whitesmoke'}
+          bg={'#fff'}
           color={'blackAlpha.800'}
           mt={0}
         >
@@ -187,23 +187,16 @@ const Home = () => {
             pl={7}
             pr={7}
           >
-            {stockType === STOCK_TYPE.TIME_SERIES ? (
-              <TimeSeriesList
-                visibleItems={visibleItems}
-                stocks={timeSeriesStocks}
-                timeSeriesType={timeSeriesMetadeta}
-                error={error}
-                handleSetTimeSeries={handleSetTimeSeries}
-              />
-            ) : (
-              <DigitalSeriesLIst
-                visibleItems={visibleItems}
-                stocks={timeSeriesStocks}
-                digitalSeriesType={timeSeriesMetadeta}
-                error={error}
-                handleSetDigitalSeries={handleSetTimeSeries}
-              />
-            )}
+            <TimeSeriesList
+              isLoading={isLoading}
+              stockType={stockType}
+              visibleItems={visibleItems}
+              stocks={timeSeriesStocks}
+              timeSeriesMetaData={timeSeriesMetadeta}
+              timeSeriesType={timeSeriesType}
+              error={error}
+              handleSetTimeSeries={handleSetTimeSeries}
+            />
           </VStack>
         </Box>
 

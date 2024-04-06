@@ -1,70 +1,24 @@
 import React from 'react';
 
-/* ========== Digital Currencies Props ========== */
-export type DigitalSeriesCommonProps = {
-  date: string;
-  open_a: string;
-  open_b: string;
-  high_a: string;
-  high_b: string;
-  low_a: string;
-  low_b: string;
-  close_a: string;
-  close_b: string;
-  volume: string;
-  cap: string;
-};
-
-export type DigitalSeriesDateProps = DigitalSeriesCommonProps;
-
-export type DigitalRowProps = DigitalSeriesCommonProps & {
-  style: React.CSSProperties;
-};
-
-export type DigitalListProps = {
-  visibleItems: DigitalSeriesCommonProps[];
-  digitalSeriesType: string;
-  stocks: TimeSeriesProps;
-  error: boolean;
-  isLoading: boolean;
-  handleDigitalSeries: (value: DigitalSeriesCommonProps[]) => void;
-};
-
-export type DigitalSeriesListProps = {
-  visibleItems: DigitalListProps['visibleItems'];
-  digitalSeriesType: DigitalListProps['digitalSeriesType'];
-  stocks?: DigitalListProps['stocks'] | null;
-  error: DigitalListProps['error'];
-  handleSetDigitalSeries: DigitalListProps['handleDigitalSeries'];
-};
-
-/* ========== Time Series Props ========== */
-export type TimeSeriesCommonProps = {
-  date: string;
-  open: string;
-  high: string;
-  low: string;
-  close: string;
-  volume: string;
-};
-
-export type TimeSeriesDateProps = TimeSeriesCommonProps;
-
-export type TimeRowProps = TimeSeriesCommonProps & {
-  style: React.CSSProperties;
-};
+/* ========== Stock Props ========== */
+export type TimeSeriesDateProps = ItemsCommonProps;
 
 export type TimeListProps = {
-  visibleItems: TimeSeriesCommonProps[];
+  isLoading: boolean;
+  visibleItems: ItemsCommonProps[];
+  timeSeriesMetaData: string;
   timeSeriesType: string;
   stocks: TimeSeriesProps;
+  stockType: string;
   error: boolean;
-  isLoading: boolean;
-  handleTimeSeries: (value: TimeSeriesCommonProps[]) => void;
+  handleTimeSeries: (value: ItemsCommonProps[]) => void;
 };
 
 export type TimeSeriesListProps = {
+  isLoading: TimeListProps['isLoading'];
+  stockType: TimeListProps['stockType'];
   visibleItems: TimeListProps['visibleItems'];
+  timeSeriesMetaData: TimeListProps['timeSeriesMetaData'];
   timeSeriesType: TimeListProps['timeSeriesType'];
   stocks?: TimeListProps['stocks'] | null;
   error: TimeListProps['error'];
@@ -72,6 +26,21 @@ export type TimeSeriesListProps = {
 };
 
 /* ========== Common Props ========== */
+export type ItemsCommonProps = {
+  date: string;
+  open: string;
+  open_b?: string;
+  high?: string;
+  high_b?: string;
+  low?: string;
+  low_b?: string;
+  close?: string;
+  close_b?: string;
+  volume: string;
+  cap?: string;
+  style?: React.CSSProperties;
+};
+
 export type MainHeaderProps = {
   activeTab: string;
   handleStockTypechange: (
@@ -90,15 +59,17 @@ export type MetadataProps = {
   metaData?: {
     [key: string]: string;
   };
-  error: TimeListProps['error'];
+  isLoading: boolean;
 };
 
 export type TimeSeriesProps = {
   [key: string]: {
-    [key: string]: string;
-  } & {
-    [date: string]: {
+    [key: string]: {
       [key: string]: string;
+    } & {
+      [date: string]: {
+        [key: string]: string;
+      };
     };
   };
 };
@@ -125,5 +96,5 @@ export type FooterProps = {
   handlePrevPage: () => void;
   endIndex: number;
   startIndex: number;
-  timeSeries: TimeSeriesCommonProps[];
+  timeSeries: ItemsCommonProps[];
 };
