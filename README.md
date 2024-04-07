@@ -25,13 +25,13 @@ On the UI, there is a 3 Tabs that let you select each type of series and display
 
 ## Fonctionality
 
-- _Data_: Displays 2 kind of stocks (Time Series Core and Digital Currencies)
-- _Tab_: Displays 3 type of Tab: DAILY, WEEKLY and MONTHLY
-- _Pagination_:
+- **Data**: Displays 2 kind of stocks (Time Series Core and Digital Currencies)
+- **Tab**: Displays 3 type of Tab: DAILY, WEEKLY and MONTHLY
+- **Pagination**:
   - The data is paginated and handles thousands of data for each type.
   - The initial data is set to 25 rows or items, then it lets you go trough the rest of items with back and forward arrow buttons.
   - This feature is friction-free and can handle even more that 10,000+ data seamlessly.
-- _Caching_: My thought after anylsis for a performant app is to cache the data as they arrive for the first time in each series and type.
+- **Caching**: My thought after anylsis for a performant app is to cache the data as they arrive for the first time in each series and type.
   - Then it let you go through each series again in each tab without making new resquests. Only a page refresh/reload can make new calls.
 
 ## Performance Techiques Applied
@@ -78,7 +78,7 @@ The list here are only the essentails in the **src directory**. Thus, we have th
 
 - **constants**
 
-  - index.ts [This defines all kind of constants and parameters the app needs to re-use in many other components. This reduces typos and avoid repetitions while making the code look cleaner]
+  - **index.ts** [This defines all kind of constants and parameters the app needs to re-use in many other components. This reduces typos and avoid repetitions while making the code look cleaner]
 
 - **hooks**
 
@@ -87,10 +87,10 @@ The list here are only the essentails in the **src directory**. Thus, we have th
 
 - **props**
 
-  - index.ts [This contains all the TypeScript types the app will ever need in each component. It re-uses also types from other components and helps avoid repetition]
+  - **index.ts** [This contains all the TypeScript types the app will ever need in each component. It re-uses also types from other components and helps avoid repetition]
 
 - **utils**
-  - apiClient.ts [Contains the base URL of Alpha Vantage API and makes all our calls]
+  - **apiClient.ts** [Contains the base URL of Alpha Vantage API and makes all our calls]
 
 Last but not least, I applied a little design to the app to make it a bit more appealing and came with the idea of Tabs to make request to each stock daily, weekly and montly.
 
