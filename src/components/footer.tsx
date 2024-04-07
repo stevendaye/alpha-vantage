@@ -41,23 +41,34 @@ export const Footer = ({
           {`${startIndex === 0 ? 1 : startIndex} - ${endIndex} of ${timeSeries.length}`}
         </Text>
 
-        <Flex alignItems={'center'}>
+        <Flex alignItems={'center'} gap={2}>
           <IconButton
-            variant={'outline'}
             aria-label="Previous Button"
-            color={'blackAlpha.700'}
+            color={'whiteAlpha.900'}
+            bg={'blackAlpha.900'}
             fontSize={'1.5em'}
             icon={<ChevronLeftIcon />}
             onClick={handlePrevPage}
             title="Previous"
+            _hover={{
+              background: 'whiteAlpha.900',
+              color: 'blackAlpha.900',
+              border: '1px solid #000',
+            }}
           />
           <IconButton
-            color={'blackAlpha.700'}
             aria-label="Next Button"
+            color={'whiteAlpha.900'}
+            bg={'blackAlpha.900'}
             fontSize={'1.5em'}
             icon={<ChevronRightIcon />}
             onClick={handleNextPage}
             title="Next"
+            _hover={{
+              background: 'whiteAlpha.900',
+              color: 'blackAlpha.900',
+              border: '1px solid #000',
+            }}
           />
         </Flex>
       </Flex>

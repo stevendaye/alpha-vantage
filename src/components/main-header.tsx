@@ -93,7 +93,6 @@ export const MainHeader = ({
           px={4}
           py={2}
           borderLeft={'7px solid #000'}
-          borderRadius={'5px'}
         >
           Alpha Vantage
         </Text>
@@ -106,6 +105,7 @@ export const MainHeader = ({
                 as={Button}
                 rightIcon={<ChevronDownIcon />}
                 bg={'blackAlpha.900'}
+                color={'#fff'}
                 _hover={{ bg: '#fff', color: '#000' }}
                 _active={{ bg: 'whiteAlpha.900', color: '#000' }}
               >
