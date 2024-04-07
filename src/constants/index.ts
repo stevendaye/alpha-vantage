@@ -3,7 +3,7 @@
  * Replace Here By New API_KEY
  * When It Reaches 25 Request Limit
  */
-export const API_KEY = 'demo';
+export const API_KEY = 'RIBXT3XYLI69PC0Q';
 export const QUERY = '/query';
 
 export const STOCK_TIME_SERIES = 'TIME SERIES';
