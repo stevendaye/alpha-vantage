@@ -1,6 +1,6 @@
-# Clepher Qualification Test
+# Alpha Vantage
 
-The tes app is deployed on Vercel under the following URL: https://alpha-v-test.vercel.app/
+The app is deployed on Vercel under the following URL: https://alpha-v-test.vercel.app/
 
 ## How To Run Locally
 
@@ -11,8 +11,9 @@ The tes app is deployed on Vercel under the following URL: https://alpha-v-test.
 
 ## Description
 
-This technical test uses the Alpha Vantage API to display a large dataset.
-In this test, my approach has been to use mainly 2 kind of Stock APIs for development. There are many others, but I chose these two. They are:
+This app uses the Alpha Vantage API to display a large dataset.
+
+In this implementation, my approach has been to use mainly 2 kind of Stock APIs for development. There are many others, but I chose these two. They are:
 
 - Time Series (Core Stock API)
 - Digital Currencies
@@ -94,4 +95,4 @@ The list here are only the essentails in the **src directory**. Thus, we have th
 
 Last but not least, I applied a little design to the app to make it a bit more appealing and came with the idea of Tabs to make request to each stock daily, weekly and montly.
 
-**I noticed that the API key has a daily limit of 25 requests per day. Currently in production on Vercel, the app is using the API key sent to me by _Berna_. So I created 4 more API's key that can be used to test the app in case it hits the daily limit locally when running the app. I sent the 4 API KEYS in an email to _Berna_. In case, you need it, just replace any of the keys in the index file of the constants directory on line 6. This is to avoid you the pain of having to create new ones yourself**
+**PS: The API key has a daily limit of 25 requests per day. Currently in production on Vercel, the app is using the a default API key**
