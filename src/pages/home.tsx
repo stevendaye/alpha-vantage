@@ -55,7 +55,7 @@ const Home = () => {
   };
 
   if (stockType === STOCK_TYPE.DIGITAL_CURRENCIES) {
-    params['market'] = EXHANGE_MARKET.CNY;
+    params['market'] = EXHANGE_MARKET.EUR;
   }
   params['apikey'] = API_KEY;
 
@@ -171,7 +171,7 @@ const Home = () => {
           />
         </Flex>
 
-        <HeaderList stockType={stockType} />
+        <HeaderList />
 
         <Box
           width={'full'}
@@ -189,7 +189,6 @@ const Home = () => {
           >
             <TimeSeriesList
               isLoading={isLoading}
-              stockType={stockType}
               visibleItems={visibleItems}
               stocks={timeSeriesStocks}
               timeSeriesMetaData={timeSeriesMetadeta}

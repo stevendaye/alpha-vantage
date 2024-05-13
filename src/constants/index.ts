@@ -3,7 +3,7 @@
  * Replace Here By New API_KEY
  * When It Reaches 25 Request Limit
  */
-export const API_KEY = 'RIBXT3XYLI69PC0Q';
+export const API_KEY = '2R4LBRMIZPG21G84';
 export const QUERY = '/query';
 
 export const STOCK_TIME_SERIES = 'TIME SERIES';
@@ -80,16 +80,5 @@ export const DATE_HIGH = '2. high';
 export const DATE_LOW = '3. low';
 export const DATE_CLOSE = '4. close';
 export const DATE_VOLUME = '5. volume';
-
-export const DATE_OPEN_1A = '1a. open (CNY)';
-export const DATE_OPEN_1B = '1b. open (USD)';
-export const DATE_HIGH_2A = '2a. high (CNY)';
-export const DATE_HIGH_2B = '2b. high (USD)';
-export const DATE_LOW_3A = '3a. low (CNY)';
-export const DATE_LOW_3B = '3b. low (USD)';
-export const DATE_CLOSE_4A = '4a. close (CNY)';
-export const DATE_CLOSE_4B = '4b. close (USD)';
-export const DATE_VOLUME_5 = '5. volume';
-export const DATE_MARKET_CAP = '6. market cap (USD)';
 
 export const ITEMS_PER_PAGE = 25;

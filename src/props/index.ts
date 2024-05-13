@@ -16,7 +16,6 @@ export type TimeListProps = {
 
 export type TimeSeriesListProps = {
   isLoading: TimeListProps['isLoading'];
-  stockType: TimeListProps['stockType'];
   visibleItems: TimeListProps['visibleItems'];
   timeSeriesMetaData: TimeListProps['timeSeriesMetaData'];
   timeSeriesType: TimeListProps['timeSeriesType'];
@@ -29,15 +28,10 @@ export type TimeSeriesListProps = {
 export type ItemsCommonProps = {
   date: string;
   open: string;
-  open_b?: string;
-  high?: string;
-  high_b?: string;
-  low?: string;
-  low_b?: string;
-  close?: string;
-  close_b?: string;
+  high: string;
+  low: string;
+  close: string;
   volume: string;
-  cap?: string;
   style?: React.CSSProperties;
 };
 
