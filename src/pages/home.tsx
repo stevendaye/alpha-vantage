@@ -55,7 +55,7 @@ const Home = () => {
   };
 
   if (stockType === STOCK_TYPE.DIGITAL_CURRENCIES) {
-    params['market'] = EXHANGE_MARKET.EUR;
+    params['market'] = EXHANGE_MARKET.CNY;
   }
   params['apikey'] = API_KEY;
 
