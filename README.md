@@ -63,8 +63,7 @@ The list here are only the essentails in the **src directory**. Thus, we have th
   - **header-list.tsx** [Displays an horizontal list of the kind of data rendered in each column]
   - **time-series-metadata.tsx** [Displays basic metadata information on the data rendered]
   - **time-series-list.tsx** [List **Time Series** or **Digital Currencies**]
-  - **time-row.tsx** [List each **Time Serie** item as a row in the list]
-  - **digital-row.tsx** [List each **Digital Currency** as a row in the list]
+  - **time-series-row.tsx** [List each **Time Serie** or **Digital Currency** item as a row in the list]
   - **tabs-list.tsx** [Displays 3 types of tabs for each Time Serie or Stock request]
 
 - **pages**
